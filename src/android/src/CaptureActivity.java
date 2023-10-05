@@ -283,8 +283,14 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
       builder.setAutoCancelDuration(3, TimeUnit.SECONDS);
 
       FocusMeteringAction autoFocusAction = builder.build();
-      cameraController.getCameraControl().cancelFocusAndMetering();
-      cameraController.getCameraControl().startFocusAndMetering(autoFocusAction);
+      try {
+        cameraController.getCameraControl().cancelFocusAndMetering();
+        cameraController.getCameraControl().startFocusAndMetering(autoFocusAction);
+      }
+      catch (Exception e) {
+        //do nothing on error here 
+      }
+      
     });
 
     cameraProviderFuture = ProcessCameraProvider.getInstance(this);
