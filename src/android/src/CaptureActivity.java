@@ -254,7 +254,12 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
     super.onStop();
 
     if (this.cameraController != null) {
-      this.cameraController.getCameraControl().cancelFocusAndMetering();
+      try {
+        this.cameraController.getCameraControl().cancelFocusAndMetering();
+      } 
+      catch (Exception e) {
+        //do nothing on error here , to avoid java.lang.NullPointerException
+      }
     }
   }
 
@@ -428,6 +433,12 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
     paint.setStyle(Paint.Style.FILL);
     canvas.drawLine((left + 5), (float)((height / 2) - 2.5), (right - 10), (float)((height / 2) + 2.5), paint);
 
-    holder.unlockCanvasAndPost(canvas);
+    try {
+     holder.unlockCanvasAndPost(canvas);
+    }
+    catch (Exception e) {
+      //do nothing on error here to ignore like:
+      //Exception java.lang.IllegalStateException: Surface has already been released.
+    }
   }
 }

@@ -146,19 +146,19 @@ public class MLKitBarcodeScanner extends CordovaPlugin {
           result.put(barcodeType);
           _CallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
 
-          if (_BeepOnSuccess) {
-            _MediaPlayer.start();
-          }
+          // if (_BeepOnSuccess) {
+          //   _MediaPlayer.start();
+          // }
 
-          if (_VibrateOnSuccess) {
-            Integer duration = 200;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-              _Vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else {
-              // deprecated in API 26 aka Oreo
-              _Vibrator.vibrate(duration);
-            }
-          }
+          // if (_VibrateOnSuccess) {
+          //   Integer duration = 200;
+          //   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          //     _Vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
+          //   } else {
+          //     // deprecated in API 26 aka Oreo
+          //     _Vibrator.vibrate(duration);
+          //   }
+          // }
 
           Log.d("MLKitBarcodeScanner", "Barcode read: " + barcodeValue);
         }
