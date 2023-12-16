@@ -78,6 +78,8 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
 
   private ScaleGestureDetector _ScaleGestureDetector;
   private GestureDetector _GestureDetector;
+  private int numberOfSame = 0; // how many times we scanned the same barcode
+  private String lastSame = ""; //the last same barcode
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -364,9 +366,25 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
           data.putExtra(BarcodeFormat, barcode.getFormat());
           data.putExtra(BarcodeType, barcode.getValueType());
           data.putExtra(BarcodeValue, value);
-
-          setResult(CommonStatusCodes.SUCCESS, data);
-          finish();
+          
+          //compare to prev result, to finish only after 3 same barcode
+          if(lastSame != "" && lastSame.equals(value)) {
+            if(numberOfSame == 2) {
+              //only after 3 same barcode , finish !
+              setResult(CommonStatusCodes.SUCCESS, data);
+              finish();
+            }
+            else {
+              //increase to 2
+              numberOfSame = 2;
+            }
+          }
+          else {
+            //new value set the value and counter
+            lastSame = value;
+            numberOfSame = 1;
+          }
+          
         }
       }
     }));
